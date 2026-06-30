@@ -25,7 +25,7 @@ live config is `config/nvim/lua/config/keymaps.lua` plus the `fugitive.lua` and
 | `<leader>P` | paste system clipboard | |
 | `zl`/`zh` -> `zL`/`zH` | horizontal scroll | |
 | `<leader>r` | `:checktime` reload buffers | |
-| `<leader>d` (NERDTreeTabsToggle) | toggle file tree | now neo-tree; `<leader>v` added as alias |
+| `<leader>d` (NERDTreeTabsToggle) | toggle file tree | LazyVim 16 ships the Snacks explorer (not neo-tree); `<leader>d`/`<leader>v` both remap to `<leader>e`. Explorer keys remapped to NERDTree habits in `plugins/snacks-explorer.lua` (`o` open/toggle, `s` vsplit, `i` split, `t` tab, `R` refresh) since stock `o` was bound to system-open |
 | `<S-h>`/`<S-l>` -> `gT`/`gt` | prev/next tab | OVERRIDES LazyVim's S-h/S-l buffer cycling |
 | `<c-w>;` + lasttab autocmd | jump to last tab | |
 | `<leader>+`/`-`/`L`/`H` | resize splits | LazyVim also has `<C-arrows>` |
