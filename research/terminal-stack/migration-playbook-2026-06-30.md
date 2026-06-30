@@ -53,7 +53,7 @@ and why, so it can be understood and debugged, not just run blindly.
 
 ### Multiplexer: tmux (kept verbatim)
 - `home/tmux.conf` is the old config byte-for-byte. The one external dependency it has, `reattach-to-user-namespace`, is installed via the Brewfile rather than editing the file.
-- Optional later tweak (not applied, to honor "keep it untouched"): switch `default-terminal` to `tmux-256color` and add a truecolor override for richer nvim colors inside tmux.
+- Truecolor (applied 2026-06-30 at David's request): `default-terminal` switched from `screen-256color` to `tmux-256color`, plus `set -ga terminal-features ",xterm-ghostty:RGB"`. nvim now renders full 24-bit color inside tmux. This is the one deliberate edit to the otherwise-verbatim tmux config; it depends on the xterm-ghostty terminfo from setup.sh step 3c.
 - **Gotcha (2026-06-30): tmux fails to start under Ghostty with "open terminal failed: not a terminal."** Cause is the missing `xterm-ghostty` terminfo. Ghostty sets `TERM=xterm-ghostty` and ships the terminfo inside its app bundle, but does not install it into the user terminfo db, so tmux's client can't initialize the terminal. Fix is to recompile the bundled entry into `~/.terminfo` (`TERMINFO_DIRS=/Applications/Ghostty.app/Contents/Resources/terminfo infocmp -x xterm-ghostty | tic -x -o ~/.terminfo -`). Now done automatically as step 3c of `setup.sh`. Fallback if the app bundle is absent: set `term = xterm-256color` in the Ghostty config.
 
 ## Manual steps after setup.sh
