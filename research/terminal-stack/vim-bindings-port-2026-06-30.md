@@ -25,7 +25,7 @@ live config is `config/nvim/lua/config/keymaps.lua` plus the `fugitive.lua` and
 | `<leader>P` | paste system clipboard | |
 | `zl`/`zh` -> `zL`/`zH` | horizontal scroll | |
 | `<leader>r` | `:checktime` reload buffers | |
-| `<leader>d` (NERDTreeTabsToggle) | toggle file tree | LazyVim 16 ships the Snacks explorer (not neo-tree); `<leader>d`/`<leader>v` both remap to `<leader>e`. Explorer keys remapped to NERDTree habits in `plugins/snacks-explorer.lua` (`o` open/toggle, `s` vsplit, `i` split, `t` tab, `R` refresh) since stock `o` was bound to system-open. Same spec also binds `<C-h/j/k/l>` in the explorer to the TmuxNavigate commands, because Snacks stole `<c-j>`/`<c-k>` for list scrolling and the left-edge `<C-h>` handoff into the tmux pane was unreliable from the tree |
+| `<leader>d` (NERDTreeTabsToggle) | toggle file tree | tree backend is neo-tree (editor.neo-tree extra); `<leader>d`/`<leader>v` both remap to `<leader>e`. `plugins/neo-tree.lua` adds `o` (open/toggle) and `i` (hsplit); `s` (vsplit) and `t` (tab) already match NERDTree. See the neo-tree-vs-snacks note below for why we left the default Snacks explorer |
 | `<S-h>`/`<S-l>` -> `gT`/`gt` | prev/next tab | OVERRIDES LazyVim's S-h/S-l buffer cycling |
 | `<c-w>;` + lasttab autocmd | jump to last tab | |
 | `<leader>+`/`-`/`L`/`H` | resize splits | LazyVim also has `<C-arrows>` |
@@ -53,6 +53,25 @@ live config is `config/nvim/lua/config/keymaps.lua` plus the `fugitive.lua` and
 - coc `<space>`-prefixed CocList UI (diagnostics/extensions/commands/outline/symbols): replaced by Telescope under `<leader>s`.
 - `<C-s>` coc range-select, coc completion plumbing: coc-specific, gone with the LSP move.
 - `<leader>sv` source vimrc: not meaningful for a Lua config; restart or `:Lazy reload`.
+
+## File tree: neo-tree over the Snacks explorer (decided 2026-06-30)
+
+LazyVim 16 dropped neo-tree as its default and ships the Snacks explorer. We
+tried to live with it and hit three problems in a row, all because the Snacks
+explorer is a *picker*, not a real window:
+
+1. `o` was bound to "open in system app", so opening a directory launched Finder.
+2. `<c-j>`/`<c-k>` were stolen for list scrolling, breaking pane navigation.
+3. `<C-h>` at the left edge never handed off to the tmux pane. The picker's focus
+   management swallowed it and bounced focus back into the editor.
+
+Patching the picker keys fixed 1 and 2 but not 3 (the focus handoff is internal
+to the picker). So we switched the tree to **neo-tree** via the
+`editor.neo-tree` LazyVim extra (`lazyvim.json`). neo-tree is a normal split
+window, so `<C-h/j/k/l>` cross the tree/editor/tmux boundaries the standard way
+with zero extra wiring, and it is the closest match to the old NERDTree.
+`plugins/neo-tree.lua` only layers `o`/`i` open-keys onto the defaults. The lock
+pins neo-tree.nvim + nui.nvim.
 
 ## Open follow-ups
 
