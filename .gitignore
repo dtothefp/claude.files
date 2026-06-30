@@ -1,0 +1,15 @@
+.DS_Store
+node_modules/
+.obsidian/workspace*
+.obsidian/cache
+.obsidian/.trash
+.credentials/
+.bin/
+.gws-accounts.json
+.linear-accounts.json
+.slack-accounts.json
+.notion-accounts.json
+/app
+.setup-state.json
+*.log
+.obsidian/plugins/obsidian-git/data.json
