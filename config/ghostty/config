@@ -12,7 +12,7 @@ adjust-cell-height = -8%
 
 # --- Theme --------------------------------------------------------------
 # Old Vim ran solarized dark. Browse choices with: ghostty +list-themes
-theme = Solarized Dark - Patched
+theme = Solarized Dark Patched
 
 # --- Window / UI --------------------------------------------------------
 background-opacity = 1.0
