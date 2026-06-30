@@ -15,15 +15,20 @@ Cowork tier works on `main` directly.
 - [x] `Brewfile` + idempotent `setup.sh` + `install/link.sh`.
 - [x] Migration playbook + decision records under `research/` and `decisions/`.
 
-## Next: actually run it on this machine
+## Ran on this machine (2026-06-30)
 
-1. **`./setup.sh`** to install the toolchain and link everything. It backs up any
-   existing `~/.zshrc` etc. to `*.bak`, so it is safe.
-2. Create `~/.zsh_secrets` from `secrets/zsh_secrets.example` and fill in real values.
-3. Launch `nvim` once so LazyVim syncs plugins; commit the resulting `lazy-lock.json`.
-4. `nvm alias default 24`.
-5. Set Ghostty as default terminal, quit iTerm2.
-6. Verify: fast shell startup, Starship prompt, git aliases work, nvim + tmux pane nav.
+- [x] **`./setup.sh`** ran clean. Toolchain installed via Brewfile, dotfiles
+      symlinked (old `~/.zshrc`/`~/.tmux.conf` backed up to `*.bak`), TPM +
+      antidote primed, Powerline font installed. Verified: 0.13s cold zsh
+      startup, no errors, nvm lazy-stubbed, git aliases work, glyph U+2B80
+      now covered.
+
+Manual steps still on David:
+
+1. Create `~/.zsh_secrets` from `secrets/zsh_secrets.example` and fill in real values.
+2. Launch `nvim` once so LazyVim syncs plugins; commit the resulting `lazy-lock.json`.
+3. `nvm alias default 24`.
+4. Set Ghostty as default terminal, quit iTerm2.
 
 ## Then: push to GitHub
 

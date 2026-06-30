@@ -82,9 +82,8 @@ fi
 say "Priming antidote plugin bundle"
 antidote_home="$(brew --prefix antidote)/share/antidote"
 if [[ -f "$antidote_home/antidote.zsh" && -f "$HOME/.zsh_plugins.txt" ]]; then
-  # shellcheck disable=SC1090
-  source "$antidote_home/antidote.zsh"
-  antidote bundle <"$HOME/.zsh_plugins.txt" >"$HOME/.zsh_plugins.zsh"
+  # antidote is a zsh script, so prime the static bundle under zsh, not bash.
+  zsh -c "source '$antidote_home/antidote.zsh'; antidote bundle <'$HOME/.zsh_plugins.txt' >'$HOME/.zsh_plugins.zsh'"
   echo "wrote ~/.zsh_plugins.zsh"
 fi
 
