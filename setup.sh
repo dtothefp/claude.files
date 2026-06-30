@@ -61,6 +61,30 @@ else
 fi
 
 # ---------------------------------------------------------------------------
+# 3c. Ghostty terminfo (so tmux/ssh resolve TERM=xterm-ghostty)
+# Ghostty sets TERM=xterm-ghostty and ships the matching terminfo inside its
+# app bundle, but does NOT install it into the user terminfo database. Without
+# it, tmux fails to initialize the client terminal ("open terminal failed: not
+# a terminal") and ssh sessions complain about an unknown terminal. Recompile
+# the bundled entry into ~/.terminfo (no sudo). Harmless to re-run.
+# ---------------------------------------------------------------------------
+say "Ensuring xterm-ghostty terminfo is installed"
+if infocmp xterm-ghostty >/dev/null 2>&1; then
+  echo "ok    xterm-ghostty terminfo already resolves"
+else
+  ghostty_ti="/Applications/Ghostty.app/Contents/Resources/terminfo"
+  if [[ -d "$ghostty_ti" ]]; then
+    TERMINFO_DIRS="$ghostty_ti" infocmp -x xterm-ghostty 2>/dev/null \
+      | tic -x -o "$HOME/.terminfo" - 2>/dev/null \
+      && echo "installed xterm-ghostty into ~/.terminfo" \
+      || echo "warn  could not compile xterm-ghostty terminfo"
+  else
+    echo "warn  Ghostty.app terminfo not found; tmux may fail under TERM=xterm-ghostty."
+    echo "      Workaround: set 'term = xterm-256color' in config/ghostty/config."
+  fi
+fi
+
+# ---------------------------------------------------------------------------
 # 4. Symlink dotfiles
 # ---------------------------------------------------------------------------
 say "Linking dotfiles"
