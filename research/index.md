@@ -15,6 +15,7 @@ Curated entry point for this project's research. New artifacts get a one-line en
 
 ### Editor
 - Neovim + vendored LazyVim, leader kept as comma. See the playbook and [decisions/0002](../decisions/0002-neovim-lazyvim-comma-leader.md).
+- [vim-bindings-port-2026-06-30](terminal-stack/vim-bindings-port-2026-06-30.md) The full accounting of which old vimrc keymaps were ported into LazyVim, which LazyVim already covers natively (so were left alone), and which were deliberately dropped. Added fugitive + tabular to carry over the git and alignment bindings.
 
 ### Multiplexer (carried over)
 - tmux config captured verbatim in `home/tmux.conf`; `reattach-to-user-namespace` satisfied via Brewfile. See the playbook.
