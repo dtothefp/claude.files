@@ -18,6 +18,7 @@ Curated entry point for this project's research. New artifacts get a one-line en
 
 ### Multiplexer (carried over)
 - tmux config captured verbatim in `home/tmux.conf`; `reattach-to-user-namespace` satisfied via Brewfile. See the playbook.
+- [powerline-fonts-2026-06-30](terminal-stack/powerline-fonts-2026-06-30.md) Whether the skwp Powerline fonts are still needed (yes, only for the tmux active-window separator `⮀`/`⮁` at U+2B80/2B81; editor and prompt no longer need them), why one OFL font is vendored in `fonts/powerline/`, and the Nerd-Font path to dropping the dependency. Also covers whether Powerline is the right status-bar choice in 2026.
 
 ### Reproducibility
 - `setup.sh` + `Brewfile` + `install/link.sh`. Idempotent, non-destructive symlinking. See the playbook.

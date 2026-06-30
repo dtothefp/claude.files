@@ -52,7 +52,7 @@ This is a cowork-tier project. **Work on `main` directly.** No feature branches,
 
 ## Directory enforcement (strict)
 
-Allowed paths: the dotfiles tree (`home/`, `config/`, `install/`, `secrets/`), root files (`setup.sh`, `Brewfile`), plus the cowork wiki/governance dirs (`context/`, `research/`, `content/`, `decisions/`, `notes/dfp/`, `assets/`, `.claude/`, `.obsidian/`) and the three `.md` governance/agent files.
+Allowed paths: the dotfiles tree (`home/`, `config/`, `install/`, `secrets/`, `fonts/`), root files (`setup.sh`, `Brewfile`), plus the cowork wiki/governance dirs (`context/`, `research/`, `content/`, `decisions/`, `notes/dfp/`, `assets/`, `.claude/`, `.obsidian/`) and the three `.md` governance/agent files.
 
 Never create ad-hoc directories (`tmp/`, `output/`, `data/`, etc.). Temp files go in `context/`. The dotfiles themselves are the deliverable and live in `home/` and `config/`, not `assets/`.
 

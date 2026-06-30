@@ -4,4 +4,6 @@ Append-only. One line per artifact. Format: `YYYY-MM-DD  short-title  path/to/fi
 
 ---
 
+- 2026-06-30: Updated [`terminal-stack/powerline-fonts-2026-06-30.md`](terminal-stack/powerline-fonts-2026-06-30.md)
+
 - 2026-06-30: Updated [`terminal-stack/migration-playbook-2026-06-30.md`](terminal-stack/migration-playbook-2026-06-30.md)

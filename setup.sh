@@ -43,6 +43,24 @@ else
 fi
 
 # ---------------------------------------------------------------------------
+# 3b. Powerline fonts for the tmux status bar
+# The kept tmux status bar uses the legacy Powerline arrows U+2B80/U+2B81 in
+# window-status-current-format. Nothing on a stock Mac (and not Ghostty's
+# bundled Nerd Font) covers those two codepoints, so the active-window
+# separator falls back to tofu without a patched Powerline font installed.
+# These two are vendored in the repo (OFL / free licensed). One is enough.
+# ---------------------------------------------------------------------------
+say "Ensuring a Powerline font is installed (tmux status bar)"
+if fc-list 2>/dev/null | grep -qi "for Powerline"; then
+  echo "ok    a Powerline font is already installed"
+elif [[ -d "$DOT/fonts/powerline" ]]; then
+  cp "$DOT/fonts/powerline/"*.otf "$HOME/Library/Fonts/" 2>/dev/null || true
+  echo "installed Powerline fonts from fonts/powerline"
+else
+  echo "warn  no Powerline font found; tmux active-window separators may show tofu"
+fi
+
+# ---------------------------------------------------------------------------
 # 4. Symlink dotfiles
 # ---------------------------------------------------------------------------
 say "Linking dotfiles"
