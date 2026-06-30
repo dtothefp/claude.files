@@ -17,3 +17,9 @@ map("n", "Y", "y$", { desc = "Yank to end of line" })
 -- Visual shifting keeps the selection (old vimrc: vnoremap < <gv)
 map("v", "<", "<gv", { desc = "Shift left, keep selection" })
 map("v", ">", ">gv", { desc = "Shift right, keep selection" })
+
+-- File tree (LazyVim uses neo-tree, which replaced NERDTree).
+-- Old vimrc bound the toggle to <leader>d (NERDTreeTabsToggle); keep that,
+-- and add <leader>v as the requested alias. <leader>e is the LazyVim default.
+map("n", "<leader>v", "<cmd>Neotree toggle<cr>", { desc = "Toggle file tree" })
+map("n", "<leader>d", "<cmd>Neotree toggle<cr>", { desc = "Toggle file tree" })
