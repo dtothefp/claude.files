@@ -17,6 +17,10 @@ return {
       mappings = {
         ["o"] = "open", -- NERDTree o: open file / toggle directory
         ["i"] = "open_split", -- NERDTree i: open in a horizontal split
+        -- NERDTree x: collapse the directory under the cursor, or its parent if
+        -- the cursor is on a file/closed dir. Replaces neo-tree's default
+        -- x=cut_to_clipboard (copy/move/add/delete stay on c/m/a/d).
+        ["x"] = "close_node",
       },
     },
   },
