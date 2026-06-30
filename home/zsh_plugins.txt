@@ -1,0 +1,19 @@
+# ~/.zsh_plugins.txt  (antidote plugin list, symlinked from this repo)
+# antidote bundles these into ~/.zsh_plugins.zsh on change. Order matters:
+# syntax-highlighting and history-substring-search go last.
+
+# Oh My Zsh git aliases (gst, gco, gp, gd, ...) WITHOUT loading all of OMZ.
+ohmyzsh/ohmyzsh path:lib/git.zsh
+ohmyzsh/ohmyzsh path:plugins/git
+
+# Extra completions
+zsh-users/zsh-completions
+
+# Fish-like autosuggestions from history
+zsh-users/zsh-autosuggestions
+
+# Syntax highlighting as you type (must come before history-substring-search)
+zsh-users/zsh-syntax-highlighting
+
+# Up/Down search through matching history entries
+zsh-users/zsh-history-substring-search

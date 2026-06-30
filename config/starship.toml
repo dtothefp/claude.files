@@ -1,0 +1,53 @@
+# Starship prompt  ->  symlinked to ~/.config/starship.toml
+# Replaces the oh-my-zsh robbyrussell theme. Keeps the familiar green arrow +
+# git branch/status, adds command duration and a few language versions.
+# Docs: https://starship.rs/config/
+
+add_newline = true
+command_timeout = 1000
+
+format = """
+$directory$git_branch$git_status$cmd_duration
+$character"""
+
+[character]
+success_symbol = "[➜](bold green)"
+error_symbol = "[➜](bold red)"
+vimcmd_symbol = "[➜](bold yellow)"
+
+[directory]
+truncation_length = 3
+truncate_to_repo = true
+style = "bold cyan"
+
+[git_branch]
+symbol = " "
+style = "bold purple"
+
+[git_status]
+style = "bold yellow"
+conflicted = "="
+ahead = "⇡${count}"
+behind = "⇣${count}"
+diverged = "⇕⇡${ahead_count}⇣${behind_count}"
+untracked = "?${count}"
+stashed = "$${count}"
+modified = "!${count}"
+staged = "+${count}"
+renamed = "»${count}"
+deleted = "✘${count}"
+
+[cmd_duration]
+min_time = 2000
+format = "took [$duration](bold yellow) "
+
+# A few language versions, shown only inside relevant projects
+[nodejs]
+symbol = " "
+[python]
+symbol = " "
+[rust]
+symbol = " "
+[aws]
+symbol = " "
+format = 'on [$symbol($profile )(\($region\) )]($style)'

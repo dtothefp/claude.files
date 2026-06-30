@@ -23,11 +23,22 @@ Keeping:
 
 David already did this migration on another machine but lost access to it. This project reconstructs and documents every step so the whole environment can be re-run from scratch.
 
+**This package IS David's new dotfiles repo.** It is structured as a clonable dotfiles repo (clean top-level layout, real configs, one `setup.sh`) and will be pushed to GitHub. It supersedes the old `~/dev/dotfiles` (the holman-style `.symlink` repo at `dtothefp/dotfiles`).
+
+## Layout
+
+The actual dotfiles live in a conventional, clonable structure (not buried under `assets/`):
+
+- `home/` maps to `~/.<name>`. So `home/zshrc` -> `~/.zshrc`, `home/tmux.conf` -> `~/.tmux.conf`, `home/zsh_plugins.txt` -> `~/.zsh_plugins.txt`.
+- `config/` maps to `~/.config/<name>`. So `config/ghostty` -> `~/.config/ghostty`, `config/nvim` -> `~/.config/nvim` (vendored LazyVim), `config/zsh` -> `~/.config/zsh`, `config/starship.toml` -> `~/.config/starship.toml`.
+- `install/link.sh` is the XDG-aware symlink engine (backs up anything it would overwrite to `*.bak`).
+- `Brewfile` is the declarative install list. `setup.sh` (root) is the idempotent orchestrator.
+- `secrets/zsh_secrets.example` is the template for machine-local secrets. The real file lives at `~/.zsh_secrets` and is never committed.
+
 ## Deliverables
 
-- Per-tool research and decision notes under `research/` and `decisions/` (why Ghostty over iTerm2, why antidote over Oh My Zsh, why Starship, why LazyVim over a hand-rolled Neovim config).
-- Captured dotfiles under `assets/` or `context/` (`.zshrc`, `.zsh_plugins.txt`, `starship.toml`, Ghostty `config`, Neovim/LazyVim overrides, the kept tmux config).
-- A reproducible `setup.sh` at the project root that installs the toolchain (via Homebrew where possible) and drops the dotfiles into place idempotently.
+- The clonable dotfiles tree above plus a reproducible `setup.sh` that installs the toolchain (Homebrew) and links everything idempotently.
+- Per-tool research and decision notes under `research/` and `decisions/` (why Ghostty over iTerm2, why antidote over Oh My Zsh, why Starship, why LazyVim over a hand-rolled Neovim config). Documenting the dotfiles is part of the repo.
 
 ## Tool routing
 
@@ -41,9 +52,9 @@ This is a cowork-tier project. **Work on `main` directly.** No feature branches,
 
 ## Directory enforcement (strict)
 
-Allowed paths: `assets/`, `context/`, `research/`, `content/`, `decisions/`, `notes/dfp/`, `.claude/`, `.obsidian/`, plus the root `setup.sh` deliverable and the three `.md` governance/agent files.
+Allowed paths: the dotfiles tree (`home/`, `config/`, `install/`, `secrets/`), root files (`setup.sh`, `Brewfile`), plus the cowork wiki/governance dirs (`context/`, `research/`, `content/`, `decisions/`, `notes/dfp/`, `assets/`, `.claude/`, `.obsidian/`) and the three `.md` governance/agent files.
 
-Never create ad-hoc directories (`tmp/`, `output/`, `data/`, etc.). Temp files go in `context/`. Captured dotfiles are deliverables, store them under `assets/` (or `context/` for working copies), referenced from research notes.
+Never create ad-hoc directories (`tmp/`, `output/`, `data/`, etc.). Temp files go in `context/`. The dotfiles themselves are the deliverable and live in `home/` and `config/`, not `assets/`.
 
 ## Wiki layer (Karpathy pattern)
 

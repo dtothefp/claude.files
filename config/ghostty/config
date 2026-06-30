@@ -1,0 +1,39 @@
+# Ghostty config (replaces iTerm2)  ->  symlinked to ~/.config/ghostty/config
+# Reload in-app with cmd+shift+, . List options with: ghostty +show-config --default
+
+# --- Font ---------------------------------------------------------------
+# Input Mono (already installed in ~/Library/Fonts/InputMono). Ghostty ships a
+# built-in Nerd Font and uses it as symbol fallback, so Starship + LazyVim
+# icons render even though Input itself is not patched.
+font-family = Input Mono
+font-size = 14
+# Input is drawn at a 1.2x line height; tighten slightly for a denser grid.
+adjust-cell-height = -8%
+
+# --- Theme --------------------------------------------------------------
+# Old Vim ran solarized dark. Browse choices with: ghostty +list-themes
+theme = Solarized Dark - Patched
+
+# --- Window / UI --------------------------------------------------------
+background-opacity = 1.0
+window-padding-x = 8
+window-padding-y = 8
+window-padding-balance = true
+macos-titlebar-style = transparent
+mouse-hide-while-typing = true
+cursor-style = block
+cursor-style-blink = false
+
+# --- macOS keyboard -----------------------------------------------------
+# Treat left Option as Alt so tmux/readline Alt bindings work; keep right
+# Option for typing special characters.
+macos-option-as-alt = left
+
+# --- Shell / clipboard --------------------------------------------------
+shell-integration = zsh
+copy-on-select = clipboard
+clipboard-paste-protection = true
+
+# --- Multiplexing -------------------------------------------------------
+# tmux is the multiplexer (kept from the old setup), so Ghostty's own splits
+# stay out of the way. Add keybinds here later if you want native panes too.

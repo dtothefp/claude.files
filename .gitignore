@@ -13,3 +13,10 @@ node_modules/
 .setup-state.json
 *.log
 .obsidian/plugins/obsidian-git/data.json
+
+# dotfiles: never commit real secrets or local cruft
+.zsh_secrets
+zsh_secrets
+*.bak
+.DS_Store
+config/nvim/lazyvim.json

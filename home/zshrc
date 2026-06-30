@@ -1,0 +1,76 @@
+#!/usr/bin/env zsh
+# ~/.zshrc  (symlinked from this dotfiles repo)
+# Fast zsh stack: antidote (plugin manager) + Starship (prompt).
+# Replaces Oh My Zsh. Machine-local secrets stay out of the repo.
+
+# ---------------------------------------------------------------------------
+# Homebrew (Apple Silicon). Idempotent; also set in ~/.zprofile for login shells.
+# ---------------------------------------------------------------------------
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# ---------------------------------------------------------------------------
+# Machine-local secrets and per-machine overrides. NEVER committed.
+# Copy secrets/zsh_secrets.example to ~/.zsh_secrets and fill in real values.
+# ---------------------------------------------------------------------------
+[[ -f ~/.zsh_secrets ]] && source ~/.zsh_secrets
+
+# ---------------------------------------------------------------------------
+# History
+# ---------------------------------------------------------------------------
+HISTFILE=~/.zsh_history
+HISTSIZE=50000
+SAVEHIST=50000
+setopt HIST_IGNORE_ALL_DUPS HIST_IGNORE_SPACE HIST_REDUCE_BLANKS
+setopt SHARE_HISTORY INC_APPEND_HISTORY EXTENDED_HISTORY
+
+# ---------------------------------------------------------------------------
+# Shell options
+# ---------------------------------------------------------------------------
+setopt AUTO_CD AUTO_PUSHD PUSHD_IGNORE_DUPS INTERACTIVE_COMMENTS
+
+# ---------------------------------------------------------------------------
+# Completion (init once, cache for speed)
+# ---------------------------------------------------------------------------
+autoload -Uz compinit
+# Rebuild the dump at most once a day, otherwise load the cached one (-C).
+if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
+  compinit
+else
+  compinit -C
+fi
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'   # case-insensitive
+
+# ---------------------------------------------------------------------------
+# antidote, the plugin manager (replaces oh-my-zsh.sh)
+# Plugin list: ~/.zsh_plugins.txt. A static bundle is regenerated only when
+# the list changes, so startup just sources one flat file.
+# ---------------------------------------------------------------------------
+antidote_home="$(brew --prefix antidote 2>/dev/null)/share/antidote"
+if [[ -f "$antidote_home/antidote.zsh" ]]; then
+  source "$antidote_home/antidote.zsh"
+  zsh_plugins_txt=~/.zsh_plugins.txt
+  zsh_plugins_zsh=~/.zsh_plugins.zsh
+  if [[ ! "$zsh_plugins_zsh" -nt "$zsh_plugins_txt" ]]; then
+    antidote bundle <"$zsh_plugins_txt" >"$zsh_plugins_zsh"
+  fi
+  source "$zsh_plugins_zsh"
+fi
+
+# ---------------------------------------------------------------------------
+# Modular config: aliases, exports, functions (symlinked to ~/.config/zsh)
+# ---------------------------------------------------------------------------
+for f in ~/.config/zsh/*.zsh(N); do
+  source "$f"
+done
+
+# ---------------------------------------------------------------------------
+# Prompt: Starship (replaces the oh-my-zsh robbyrussell theme)
+# ---------------------------------------------------------------------------
+command -v starship >/dev/null && eval "$(starship init zsh)"
+
+# ---------------------------------------------------------------------------
+# Modern CLI tool init
+# ---------------------------------------------------------------------------
+command -v zoxide >/dev/null && eval "$(zoxide init zsh)"       # smart cd, z
+command -v fzf    >/dev/null && source <(fzf --zsh) 2>/dev/null  # Ctrl-R / Ctrl-T / Alt-C
