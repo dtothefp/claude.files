@@ -18,6 +18,10 @@ require("lazy").setup({
   spec = {
     -- add LazyVim and import its plugins
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
+    -- LazyVim extras. TypeScript LSP (vtsls) for hover, go-to-def, types and
+    -- diagnostics. vtsls uses its bundled TypeScript by default, so it coexists
+    -- with the practice harness's TS 7 RC (which ships no classic tsserver.js).
+    { import = "lazyvim.plugins.extras.lang.typescript" },
     -- import/override with your plugins
     { import = "plugins" },
   },

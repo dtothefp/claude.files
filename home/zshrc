@@ -58,6 +58,28 @@ if [[ -f "$antidote_home/antidote.zsh" ]]; then
 fi
 
 # ---------------------------------------------------------------------------
+# Keybindings. Force the emacs keymap. Oh My Zsh used to do this for us; without
+# it, zsh picks the keymap from $EDITOR (now 'nvim', which contains "vi") and
+# silently boots into vi-insert, where Ctrl-P / Ctrl-N self-insert as a literal
+# ^P / ^N instead of walking history. -e restores the classic readline keys
+# (Ctrl-A/E/P/N/R/W ...), matching the old OMZ behavior.
+# ---------------------------------------------------------------------------
+bindkey -e
+
+# zsh-history-substring-search: wire Up/Down and Ctrl-P/Ctrl-N to prefix-aware
+# history search. Must run AFTER the plugin is sourced above (the widgets are
+# defined there). On an empty line these behave like plain history up/down
+# (parity with the old setup); with a typed prefix they cycle only matching
+# commands. Both ^[[A and ^[OA are bound to cover normal and application-cursor
+# mode (the latter is what tmux sends).
+bindkey '^[[A' history-substring-search-up      # Up arrow (normal)
+bindkey '^[OA' history-substring-search-up      # Up arrow (application/tmux)
+bindkey '^[[B' history-substring-search-down    # Down arrow (normal)
+bindkey '^[OB' history-substring-search-down    # Down arrow (application/tmux)
+bindkey '^P'   history-substring-search-up      # Ctrl-P
+bindkey '^N'   history-substring-search-down    # Ctrl-N
+
+# ---------------------------------------------------------------------------
 # Modular config: aliases, exports, functions (symlinked to ~/.config/zsh)
 # ---------------------------------------------------------------------------
 for f in ~/.config/zsh/*.zsh(N); do

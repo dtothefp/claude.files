@@ -34,6 +34,21 @@ map("n", "*", "*<c-o>", { desc = "Search word under cursor, stay put" })
 map("v", "<", "<gv", { desc = "Shift left, keep selection" })
 map("v", ">", ">gv", { desc = "Shift right, keep selection" })
 
+-- ---------------------------------------------------------------------------
+-- Commenting. The old vimrc used NERDCommenter (`scrooloose/nerdcommenter`,
+-- g:NERDSpaceDelims = 1), and the old README documented the muscle memory:
+-- <leader>cc to comment a highlighted block, <leader>c<space> to uncomment.
+-- LazyVim comments natively via gc / gcc, so these just alias the old keys.
+-- remap = true is REQUIRED: gc/gcc are operator mappings, not builtin commands,
+-- so a non-recursive map wouldn't trigger them. Without this block a visual
+-- <leader>cc falls through to `c` (change), which deletes the selection
+-- instead of commenting it (the bug this fixes).
+-- ---------------------------------------------------------------------------
+map("n", "<leader>cc", "gcc", { remap = true, desc = "Toggle comment (line)" })
+map("x", "<leader>cc", "gc", { remap = true, desc = "Toggle comment (selection)" })
+map("n", "<leader>c<space>", "gcc", { remap = true, desc = "Toggle comment (line)" })
+map("x", "<leader>c<space>", "gc", { remap = true, desc = "Toggle comment (selection)" })
+
 -- Paste from the system clipboard register (old: nnoremap <leader>P "+P)
 map("n", "<leader>P", '"+P', { desc = "Paste from system clipboard" })
 
