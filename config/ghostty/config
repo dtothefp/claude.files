@@ -22,7 +22,10 @@ window-padding-balance = true
 macos-titlebar-style = transparent
 mouse-hide-while-typing = true
 cursor-style = block
-cursor-style-blink = false
+cursor-style-blink = true
+# Keep the block shape at the shell prompt (stop shell integration from
+# switching it to a bar). nvim still controls its own cursor per mode.
+shell-integration-features = no-cursor
 
 # --- macOS keyboard -----------------------------------------------------
 # Treat left Option as Alt so tmux/readline Alt bindings work; keep right

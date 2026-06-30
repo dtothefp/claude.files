@@ -45,11 +45,13 @@ map("n", "zh", "zH", { desc = "Scroll left (half screen)" })
 map("n", "<leader>r", "<cmd>checktime<cr>", { desc = "Reload changed buffers" })
 
 -- ---------------------------------------------------------------------------
--- File tree (LazyVim ships neo-tree; old vimrc used NERDTreeTabsToggle on
--- <leader>d). Keep <leader>d, add <leader>v alias. <leader>e is LazyVim default.
+-- File tree. Old vimrc used NERDTreeTabsToggle on <leader>d. LazyVim 16
+-- dropped neo-tree for the Snacks explorer, so instead of hardcoding a
+-- backend command, remap to LazyVim's own explorer toggle (<leader>e). This
+-- tracks whatever explorer LazyVim ships. Keep <leader>d, add <leader>v alias.
 -- ---------------------------------------------------------------------------
-map("n", "<leader>v", "<cmd>Neotree toggle<cr>", { desc = "Toggle file tree" })
-map("n", "<leader>d", "<cmd>Neotree toggle<cr>", { desc = "Toggle file tree" })
+map("n", "<leader>v", "<leader>e", { remap = true, desc = "Toggle file tree" })
+map("n", "<leader>d", "<leader>e", { remap = true, desc = "Toggle file tree" })
 
 -- ---------------------------------------------------------------------------
 -- Tabs (old config was tab-centric: taboo + tabline + S-H/S-L). This OVERRIDES
