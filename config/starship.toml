@@ -31,7 +31,10 @@ ahead = "⇡${count}"
 behind = "⇣${count}"
 diverged = "⇕⇡${ahead_count}⇣${behind_count}"
 untracked = "?${count}"
-stashed = "$${count}"
+# Literal '$' as the stash symbol. TOML literal string (single quotes) + \$ so
+# Starship treats the dollar as text, not the start of a variable. A bare
+# "$${count}" fails to parse and silently drops the whole git_status module.
+stashed = '\$${count}'
 modified = "!${count}"
 staged = "+${count}"
 renamed = "»${count}"
