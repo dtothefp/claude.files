@@ -4,6 +4,29 @@
 # Replaces Oh My Zsh. Machine-local secrets stay out of the repo.
 
 # ---------------------------------------------------------------------------
+# Dead working directory recovery. Runs FIRST, before anything reads the cwd.
+# ---------------------------------------------------------------------------
+# If the shell starts in a directory that no longer exists, getcwd() fails and
+# every command (plus every /bin/sh helper tmux spawns from its own config)
+# prints `getcwd: cannot access parent directories: No such file or directory`.
+# This bites constantly in this workspace. Removed git worktrees, renamed
+# parents (projects/ became packages/), consolidated packages. A killed
+# package-hadrian-interview left a Ghostty login shell parked in a deleted dir,
+# and every tmux session it spawned inherited that corpse. Detect the dead cwd,
+# walk up $PWD to the nearest surviving ancestor, fall back to $HOME.
+# Detector: getcwd() fails, OR $PWD no longer resolves to a real directory.
+# The second check matters on APFS, where a deleted dir's vnode can stay alive
+# so getcwd() still succeeds even though the path is gone. Testing $PWD against
+# the filesystem catches that. Recovery walks up to the nearest live ancestor.
+if ! pwd -P >/dev/null 2>&1 || [[ ! -d $PWD ]]; then
+  () {
+    local d=$PWD
+    while [[ -n $d && ! -d $d ]]; do d=${d:h}; done
+    builtin cd -- "${d:-$HOME}" 2>/dev/null || builtin cd -- "$HOME"
+  }
+fi
+
+# ---------------------------------------------------------------------------
 # Homebrew (Apple Silicon). Idempotent; also set in ~/.zprofile for login shells.
 # ---------------------------------------------------------------------------
 eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -38,8 +61,18 @@ if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
 else
   compinit -C
 fi
-zstyle ':completion:*' menu select
+# fzf-tab (loaded via antidote below) replaces the completion menu with an fzf
+# popup, so the built-in menu is turned OFF here. 'menu select' actively
+# conflicts with fzf-tab and stops it from capturing completions.
+zstyle ':completion:*' menu no
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'   # case-insensitive
+
+# fzf-tab look + behavior. zstyles are read at completion time, so setting them
+# here (before the plugin is sourced) is fine. Directory completions get an eza
+# preview (ls fallback for fresh machines); '<' / '>' switch completion groups.
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always --icons --group-directories-first "$realpath" 2>/dev/null || ls -1p "$realpath"'
+zstyle ':fzf-tab:*' fzf-min-height 15
+zstyle ':fzf-tab:*' switch-group '<' '>'
 
 # ---------------------------------------------------------------------------
 # antidote, the plugin manager (replaces oh-my-zsh.sh)
