@@ -13,6 +13,18 @@
 return {
   "nvim-neo-tree/neo-tree.nvim",
   opts = {
+    filesystem = {
+      filtered_items = {
+        -- Dotfiles are half this workspace (.claude, .obsidian, .env). Child
+        -- projects under packages/ are cloned separately and gitignored, so
+        -- neo-tree's hide_gitignored default collapses all 68 of them.
+        hide_dotfiles = false,
+        hide_gitignored = false,
+        -- never_show, not hide_by_name: hide_by_name entries still render
+        -- (dimmed) once anything unhides them.
+        never_show = { ".DS_Store", ".git" },
+      },
+    },
     window = {
       mappings = {
         ["o"] = "open", -- NERDTree o: open file / toggle directory

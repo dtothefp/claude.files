@@ -23,5 +23,26 @@ opt.spell = false
 opt.number = true
 opt.relativenumber = true
 
+-- LazyVim turns on `list` (shows tabs/trailing whitespace as dashes). Turn it
+-- back off so blank lines and line-ends are clean. The vertical indent guides
+-- are disabled separately in plugins/snacks.lua.
+opt.list = false
+
 -- Use the system clipboard for yanks (old vimrc: set clipboard=unnamed)
 opt.clipboard = "unnamedplus"
+
+-- Pin the macOS pbcopy/pbpaste clipboard provider when it's available. Without
+-- this, inside tmux/Ghostty Neovim auto-selects a write-only OSC52 provider:
+-- yanks reach the system clipboard, but `p` cannot read it back, so in-editor
+-- yank -> paste silently breaks. pbcopy/pbpaste is bidirectional and local, so
+-- `yy`/`dd` round-trip correctly and yanks still reach the macOS pasteboard.
+-- Guarded on executable() so a remote/SSH session (no pbcopy) falls back to
+-- Neovim's default provider instead.
+if vim.fn.executable("pbcopy") == 1 and vim.fn.executable("pbpaste") == 1 then
+  vim.g.clipboard = {
+    name = "pbcopy",
+    copy = { ["+"] = "pbcopy", ["*"] = "pbcopy" },
+    paste = { ["+"] = "pbpaste", ["*"] = "pbpaste" },
+    cache_enabled = 0,
+  }
+end

@@ -9,6 +9,11 @@ ohmyzsh/ohmyzsh path:plugins/git
 # Extra completions
 zsh-users/zsh-completions
 
+# Tab completion through an fzf popup (fuzzy filter + preview) instead of the
+# plain zsh menu. MUST load after zsh-completions and before autosuggestions /
+# syntax-highlighting: those wrap ZLE widgets that fzf-tab needs to wrap first.
+Aloxaf/fzf-tab
+
 # Fish-like autosuggestions from history
 zsh-users/zsh-autosuggestions
 
