@@ -129,3 +129,7 @@ command -v starship >/dev/null && eval "$(starship init zsh)"
 # ---------------------------------------------------------------------------
 command -v zoxide >/dev/null && eval "$(zoxide init zsh)"       # smart cd, z
 command -v fzf    >/dev/null && source <(fzf --zsh) 2>/dev/null  # Ctrl-R / Ctrl-T / Alt-C
+
+# >>> railway initialize >>>
+source "$HOME/.railway/env"
+# <<< railway initialize <<<
